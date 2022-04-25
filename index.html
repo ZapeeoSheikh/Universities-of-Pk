@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universities in Pakistan </title>
+    <style>
+        table,
+        th,
+        td {
+            text-align: center;
+            color: rgb(51, 46, 46);
+            background-color: rgb(243, 228, 208);
+            border: 1px solid rgb(198, 44, 44);
+        }
+        
+        table thead tr th,
+        table tfoot tr th {
+            color: rgb(233, 18, 18);
+        }
+    </style>
+</head>
+
+<body>
+    <h3>All Universities of Pakistan</h3>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th>Sr no</th>
+                <th>Country</th>
+                <th>State province</th>
+                <th>University Name</th>
+                <th>Website</th>
+                <th>Alpha Code </th>
+                <th>Domains</th>
+            </tr>
+        </thead>
+        <tbody id="myData">
+
+        </tbody>
+        <tfoot>
+            <th>Sr no</th>
+            <th>Country</th>
+            <th>State province</th>
+            <th>University Name</th>
+            <th>Website</th>
+            <th>Alpha Code </th>
+            <th>Domains</th>
+        </tfoot>
+    </table>
+</body>
+<script>
+    getData();
+    debugger;
+    async function getData() {
+        let resource = await fetch("http://universities.hipolabs.com/search?country=Pakistan");
+        let data = await resource.json();
+        let myHtml = '';
+        for (let i = 0; i < data.length; i++) {
+            myHtml += `
+        <tr>
+            <td>${i+1}</td>
+            <td>${data[i].country}</td>
+            <td>${data[i]['state-province']}</td>
+            <td>${data[i].name}</td>
+            <td><a href="${data[i]['web_pages']}">${data[i]['web_pages']}</a></td>
+            <td>${data[i]['alpha_two_code']}</td>
+            <td>${data[i].domains}</td>
+            
+            
+         </tr>
+        
+        `;
+            document.getElementById('myData').innerHTML = myHtml;
+
+        }
+    }
+</script>
+
+</html>
